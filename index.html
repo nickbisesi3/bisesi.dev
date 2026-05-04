@@ -3,9 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>bisesi.dev</title>
+  <title>Nick Bisesi</title>
+  <style>
+    :root {
+      --bg: #fafaf7;
+      --fg: #1a1a1a;
+      --muted: #666;
+      --accent: #c2410c;
+      --rule: #e5e5e0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111110;
+        --fg: #ededeb;
+        --muted: #999;
+        --accent: #fb923c;
+        --rule: #2a2a28;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      font-size: 18px;
+    }
+    main {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 6rem 1.5rem 4rem;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 0 0 0.25rem;
+      letter-spacing: -0.01em;
+    }
+    h2 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin: 3rem 0 1rem;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+    p { margin: 0 0 1rem; }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+    a:hover { border-bottom-color: var(--accent); }
+    .tagline {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      padding: 0.75rem 0;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    li:last-child { border-bottom: 1px solid var(--rule); }
+    .item-title { font-weight: 500; }
+    .item-meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      white-space: nowrap;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+    footer {
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello World</h1>
+  <main>
+    <h1>Nick Bisesi</h1>
+    <p class="tagline">Building learning tools in VR.</p>
+
+    <p>I work on <a href="https://learningtimevr.com">Learning Time VR</a>, where we make immersive educational experiences for kids. Previously: software engineering across web, 3D, and ML.</p>
+
+    <h2>Work</h2>
+    <ul>
+      <li>
+        <span class="item-title">Learning Time VR</span>
+        <span class="item-meta">Founder</span>
+      </li>
+    </ul>
+
+    <h2>Elsewhere</h2>
+    <ul>
+      <li>
+        <span class="item-title"><a href="mailto:nick@learningtimevr.com">Email</a></span>
+        <span class="item-meta">nick@learningtimevr.com</span>
+      </li>
+      <li>
+        <span class="item-title"><a href="https://github.com/nickbisesi3">GitHub</a></span>
+        <span class="item-meta">@nickbisesi3</span>
+      </li>
+    </ul>
+
+    <footer>
+      &copy; Nick Bisesi
+    </footer>
+  </main>
 </body>
 </html>
