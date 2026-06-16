@@ -7,119 +7,213 @@
   <meta name="description" content="Bisesi Educational Technologies" />
   <meta property="og:title" content="Bisesi Educational Technologies" />
   <meta property="og:description" content="Bisesi Educational Technologies" />
-  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="theme-color" content="#060608" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; height: 100%; }
 
     body {
-      background: #0a0a0a;
+      background: #060608;
       color: #f5f5f5;
-      font-family: 'Saira', -apple-system, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+      padding: clamp(1rem, 4vw, 3rem);
       overflow: hidden;
       cursor: default;
       position: relative;
     }
 
-    /* Cursor spotlight — soft orange glow following the pointer */
+    /* ── Atmospheric color orbs (gives the glass something to refract) ── */
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .atmosphere .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      will-change: transform;
+    }
+    .orb-1 {
+      width: 70vw; height: 70vw;
+      top: -22%; left: -18%;
+      background: radial-gradient(circle, rgba(255, 94, 46, 0.42), transparent 70%);
+      animation: drift1 32s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 65vw; height: 65vw;
+      bottom: -22%; right: -18%;
+      background: radial-gradient(circle, rgba(80, 130, 220, 0.34), transparent 70%);
+      animation: drift2 40s ease-in-out infinite alternate;
+    }
+    .orb-3 {
+      width: 50vw; height: 50vw;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(180, 90, 220, 0.18), transparent 70%);
+      animation: drift3 44s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 { to { transform: translate(8vw, 10vh) scale(1.1); } }
+    @keyframes drift2 { to { transform: translate(-7vw, -6vh) scale(1.08); } }
+    @keyframes drift3 { to { transform: translate(calc(-50% + 6vw), calc(-50% - 4vh)) scale(0.92); } }
+
+    /* ── Subtle dot grain so the glass has texture under it ── */
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(ellipse 90% 65% at 50% 50%, black 30%, transparent 90%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 65% at 50% 50%, black 30%, transparent 90%);
+    }
+
+    /* ── Cursor spotlight ── */
     .spotlight {
       position: fixed;
       top: 0; left: 0;
-      width: 520px; height: 520px;
-      margin: -260px 0 0 -260px;
+      width: 540px; height: 540px;
+      margin: -270px 0 0 -270px;
       pointer-events: none;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 94, 46, 0.11), transparent 62%);
-      z-index: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.07), transparent 62%);
+      z-index: 1;
       opacity: 0;
       transition: transform 0.18s cubic-bezier(0.2, 0, 0, 1), opacity 0.4s ease;
       will-change: transform;
     }
     body.pointer-active .spotlight { opacity: 1; }
 
+    /* ── The wordmark ── */
     h1 {
       position: relative;
-      z-index: 1;
-      font-family: 'Saira', sans-serif;
-      font-weight: 500;
-      font-size: clamp(1.5rem, 4.5vw, 3.25rem);
-      letter-spacing: 0.02em;
-      line-height: 1.15;
+      z-index: 2;
       margin: 0;
       text-align: center;
       user-select: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      font-weight: 800;
+      line-height: 0.86;
+      letter-spacing: -0.045em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.04em;
+      max-width: 100%;
     }
+
+    .word {
+      display: block;
+      filter:
+        drop-shadow(0 2px 1px rgba(255,255,255,0.10))
+        drop-shadow(0 22px 60px rgba(0,0,0,0.55));
+      transition: filter 0.5s ease;
+    }
+    /* Tuned so each word fills a similar horizontal width — poster-balanced */
+    .word.w1 { font-size: clamp(4.5rem, 22vw, 16rem); }
+    .word.w2 { font-size: clamp(2.3rem, 11.4vw, 8.8rem); }
+    .word.w3 { font-size: clamp(2.2rem, 10.8vw, 8.4rem); }
 
     .letter {
       display: inline-block;
+      /* Glassmorphic refraction: bright at top, fading down */
+      background: linear-gradient(180deg,
+        rgba(255,255,255,1.0)   0%,
+        rgba(255,255,255,0.85) 45%,
+        rgba(255,255,255,0.50) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
       transition:
-        color 0.25s ease,
-        transform 0.25s cubic-bezier(0.2, 0, 0, 1),
-        text-shadow 0.25s ease;
+        transform 0.32s cubic-bezier(0.2, 0, 0, 1),
+        filter 0.3s ease;
     }
     .letter:not(.space):hover {
-      color: #ff5e2e;
-      transform: translateY(-4px);
-      text-shadow: 0 0 18px rgba(255, 94, 46, 0.55);
+      transform: translateY(-8px) scale(1.02);
       cursor: pointer;
+      filter: drop-shadow(0 0 24px rgba(255, 94, 46, 0.55));
     }
     .letter.scrambling {
-      color: #ff5e2e;
-      text-shadow: 0 0 16px rgba(255, 94, 46, 0.55);
+      background: linear-gradient(180deg,
+        rgba(255,180,130,1) 0%,
+        rgba(255,94,46,0.85) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 22px rgba(255, 94, 46, 0.55));
     }
 
-    /* Click ripple */
+    /* ── Click ripple ── */
     .ripple {
       position: fixed;
       pointer-events: none;
-      border: 1px solid rgba(255, 94, 46, 0.65);
+      border: 1px solid rgba(255, 94, 46, 0.7);
       border-radius: 50%;
       transform: translate(-50%, -50%);
-      animation: ripple-grow 0.75s cubic-bezier(0.2, 0, 0, 1) forwards;
-      z-index: 2;
+      animation: ripple-grow 0.85s cubic-bezier(0.2, 0, 0, 1) forwards;
+      z-index: 5;
       width: 0; height: 0;
     }
     @keyframes ripple-grow {
-      0%   { width: 0; height: 0; opacity: 0.9; }
-      100% { width: 260px; height: 260px; opacity: 0; }
+      0%   { width: 0;     height: 0;     opacity: 0.9; }
+      100% { width: 340px; height: 340px; opacity: 0;   }
+    }
+
+    @media (max-width: 540px) {
+      h1 { letter-spacing: -0.035em; gap: 0.02em; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .letter, .spotlight { transition: none !important; }
+      .letter, .spotlight, .word, .orb { transition: none !important; animation: none !important; }
       .ripple { display: none; }
     }
   </style>
 </head>
 <body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="atmosphere" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+  </div>
   <div class="spotlight" aria-hidden="true"></div>
-  <h1 id="brand">Bisesi Educational Technologies</h1>
+
+  <h1 aria-label="Bisesi Educational Technologies">
+    <span class="word w1" data-word="Bisesi"></span>
+    <span class="word w2" data-word="Educational"></span>
+    <span class="word w3" data-word="Technologies"></span>
+  </h1>
 
   <script>
-    const BRAND = 'Bisesi Educational Technologies';
     const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@%/<>';
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const brand = document.getElementById('brand');
 
     // Wrap each character in its own span so we can target it
-    brand.innerHTML = BRAND.split('').map(ch => {
-      if (ch === ' ') return '<span class="letter space">&nbsp;</span>';
-      // Escape only what we render — these are all plain letters here, safe.
-      return `<span class="letter" data-char="${ch}">${ch}</span>`;
-    }).join('');
+    document.querySelectorAll('.word').forEach(word => {
+      const txt = word.dataset.word;
+      word.innerHTML = txt.split('').map(ch => {
+        if (ch === ' ') return '<span class="letter space">&nbsp;</span>';
+        return `<span class="letter" data-char="${ch}">${ch}</span>`;
+      }).join('');
+    });
 
-    const letters = Array.from(brand.querySelectorAll('.letter:not(.space)'));
+    const letters = Array.from(document.querySelectorAll('.letter:not(.space)'));
 
     function scramble(el, duration = 380) {
       if (reduceMotion) return;
@@ -147,17 +241,17 @@
       l.addEventListener('mouseenter', () => scramble(l, 350));
     });
 
-    // Click anywhere → ripple + cascade scramble the whole word
+    // Click anywhere → ripple + cascade scramble across all words
     document.addEventListener('click', (e) => {
       const r = document.createElement('div');
       r.className = 'ripple';
       r.style.left = e.clientX + 'px';
       r.style.top = e.clientY + 'px';
       document.body.appendChild(r);
-      setTimeout(() => r.remove(), 750);
+      setTimeout(() => r.remove(), 850);
 
       letters.forEach((l, i) => {
-        setTimeout(() => scramble(l, 500 + Math.random() * 300), i * 18);
+        setTimeout(() => scramble(l, 500 + Math.random() * 300), i * 14);
       });
     });
 
