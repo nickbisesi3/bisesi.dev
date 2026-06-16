@@ -178,6 +178,7 @@
 
     .letter {
       display: inline-block;
+      text-align: center;
       transition:
         color 0.25s ease,
         transform 0.32s cubic-bezier(0.2, 0, 0, 1),
@@ -254,6 +255,24 @@
     });
 
     const letters = Array.from(document.querySelectorAll('.letter:not(.space)'));
+
+    // Lock each letter's box to its natural width so the scramble (which
+    // swaps in random chars of different widths) can't change the word
+    // width and push it to the next line. Stored in em so it scales with
+    // the responsive font-size automatically.
+    async function lockLetterWidths() {
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch (e) {}
+      }
+      letters.forEach(l => {
+        const w = l.getBoundingClientRect().width;
+        const parentFontSize = parseFloat(getComputedStyle(l.parentElement).fontSize);
+        if (parentFontSize > 0 && w > 0) {
+          l.style.width = (w / parentFontSize) + 'em';
+        }
+      });
+    }
+    lockLetterWidths();
 
     function scramble(el, duration = 380) {
       if (reduceMotion) return;
