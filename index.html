@@ -11,7 +11,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
@@ -20,7 +20,7 @@
     body {
       background: #060608;
       color: #f5f5f5;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+      font-family: 'Saira', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       min-height: 100vh;
@@ -34,7 +34,7 @@
       position: relative;
     }
 
-    /* ── Atmospheric color orbs (gives the glass something to refract) ── */
+    /* ── Atmospheric color orbs (give the glass something to refract) ── */
     .atmosphere {
       position: fixed;
       inset: 0;
@@ -71,17 +71,65 @@
     @keyframes drift2 { to { transform: translate(-7vw, -6vh) scale(1.08); } }
     @keyframes drift3 { to { transform: translate(calc(-50% + 6vw), calc(-50% - 4vh)) scale(0.92); } }
 
-    /* ── Subtle dot grain so the glass has texture under it ── */
+    /* ── Subtle dot grain under the glass ── */
     .grain {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
       background-size: 24px 24px;
       mask-image: radial-gradient(ellipse 90% 65% at 50% 50%, black 30%, transparent 90%);
       -webkit-mask-image: radial-gradient(ellipse 90% 65% at 50% 50%, black 30%, transparent 90%);
     }
+
+    /* ── Liquid glass shapes — float behind the wordmark ── */
+    .glass-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .glass {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(34px) saturate(180%);
+      -webkit-backdrop-filter: blur(34px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.28),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+        0 30px 80px -20px rgba(0, 0, 0, 0.55);
+      will-change: transform;
+    }
+    .glass-1 {
+      width: clamp(300px, 36vw, 540px);
+      height: clamp(300px, 36vw, 540px);
+      top: 8%;
+      left: -10%;
+      border-radius: 50%;
+      animation: float1 22s ease-in-out infinite alternate;
+    }
+    .glass-2 {
+      width: clamp(240px, 30vw, 460px);
+      height: clamp(120px, 14vw, 200px);
+      bottom: 10%;
+      right: -8%;
+      border-radius: 9999px;
+      animation: float2 26s ease-in-out infinite alternate;
+    }
+    .glass-3 {
+      width: clamp(160px, 18vw, 280px);
+      height: clamp(160px, 18vw, 280px);
+      top: 68%;
+      left: 60%;
+      border-radius: 38% 42% 50% 46% / 50% 46% 42% 50%;
+      animation: float3 30s ease-in-out infinite alternate;
+    }
+    @keyframes float1 { to { transform: translate(28px, -36px) rotate(7deg); } }
+    @keyframes float2 { to { transform: translate(-32px, 22px) rotate(-5deg); } }
+    @keyframes float3 { to { transform: translate(18px, -26px) rotate(6deg); } }
 
     /* ── Cursor spotlight ── */
     .spotlight {
@@ -91,7 +139,7 @@
       margin: -270px 0 0 -270px;
       pointer-events: none;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.07), transparent 62%);
+      background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 62%);
       z-index: 1;
       opacity: 0;
       transition: transform 0.18s cubic-bezier(0.2, 0, 0, 1), opacity 0.4s ease;
@@ -99,64 +147,51 @@
     }
     body.pointer-active .spotlight { opacity: 1; }
 
-    /* ── The wordmark ── */
+    /* ── The wordmark — solid Saira caps, no glass on the text itself ── */
     h1 {
       position: relative;
       z-index: 2;
       margin: 0;
       text-align: center;
       user-select: none;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
-      font-weight: 800;
-      line-height: 0.86;
-      letter-spacing: -0.045em;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 0.92;
+      letter-spacing: 0.005em;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.04em;
+      gap: 0.05em;
       max-width: 100%;
+      color: #fafafa;
+      text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        0 18px 50px rgba(0, 0, 0, 0.35);
     }
 
-    .word {
-      display: block;
-      filter:
-        drop-shadow(0 2px 1px rgba(255,255,255,0.10))
-        drop-shadow(0 22px 60px rgba(0,0,0,0.55));
-      transition: filter 0.5s ease;
-    }
-    /* Tuned so each word fills a similar horizontal width — poster-balanced */
-    .word.w1 { font-size: clamp(4.5rem, 22vw, 16rem); }
-    .word.w2 { font-size: clamp(2.3rem, 11.4vw, 8.8rem); }
-    .word.w3 { font-size: clamp(2.2rem, 10.8vw, 8.4rem); }
+    .word { display: block; }
+    /* Sized so all three words sit at roughly the same horizontal extent */
+    .word.w1 { font-size: clamp(5rem,   24vw, 17rem); }
+    .word.w2 { font-size: clamp(2.7rem, 13vw,  9.5rem); }
+    .word.w3 { font-size: clamp(2.5rem, 12vw,  8.8rem); }
 
     .letter {
       display: inline-block;
-      /* Glassmorphic refraction: bright at top, fading down */
-      background: linear-gradient(180deg,
-        rgba(255,255,255,1.0)   0%,
-        rgba(255,255,255,0.85) 45%,
-        rgba(255,255,255,0.50) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
       transition:
+        color 0.25s ease,
         transform 0.32s cubic-bezier(0.2, 0, 0, 1),
-        filter 0.3s ease;
+        text-shadow 0.25s ease;
     }
     .letter:not(.space):hover {
-      transform: translateY(-8px) scale(1.02);
+      color: #ff5e2e;
+      transform: translateY(-8px);
       cursor: pointer;
-      filter: drop-shadow(0 0 24px rgba(255, 94, 46, 0.55));
+      text-shadow: 0 0 26px rgba(255, 94, 46, 0.6);
     }
     .letter.scrambling {
-      background: linear-gradient(180deg,
-        rgba(255,180,130,1) 0%,
-        rgba(255,94,46,0.85) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 22px rgba(255, 94, 46, 0.55));
+      color: #ff5e2e;
+      text-shadow: 0 0 22px rgba(255, 94, 46, 0.55);
     }
 
     /* ── Click ripple ── */
@@ -176,11 +211,11 @@
     }
 
     @media (max-width: 540px) {
-      h1 { letter-spacing: -0.035em; gap: 0.02em; }
+      h1 { gap: 0.03em; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .letter, .spotlight, .word, .orb { transition: none !important; animation: none !important; }
+      .letter, .spotlight, .glass, .orb { transition: none !important; animation: none !important; }
       .ripple { display: none; }
     }
   </style>
@@ -192,16 +227,21 @@
     <span class="orb orb-2"></span>
     <span class="orb orb-3"></span>
   </div>
+  <div class="glass-layer" aria-hidden="true">
+    <div class="glass glass-1"></div>
+    <div class="glass glass-2"></div>
+    <div class="glass glass-3"></div>
+  </div>
   <div class="spotlight" aria-hidden="true"></div>
 
   <h1 aria-label="Bisesi Educational Technologies">
-    <span class="word w1" data-word="Bisesi"></span>
-    <span class="word w2" data-word="Educational"></span>
-    <span class="word w3" data-word="Technologies"></span>
+    <span class="word w1" data-word="BISESI"></span>
+    <span class="word w2" data-word="EDUCATIONAL"></span>
+    <span class="word w3" data-word="TECHNOLOGIES"></span>
   </h1>
 
   <script>
-    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@%/<>';
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@%/<>';
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Wrap each character in its own span so we can target it
