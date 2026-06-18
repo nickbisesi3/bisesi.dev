@@ -15,7 +15,8 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; height: 100%; }
+    html, body { margin: 0; padding: 0; }
+    html { height: 100%; }
 
     body {
       background: #060608;
@@ -25,11 +26,7 @@
       text-rendering: optimizeLegibility;
       min-height: 100vh;
       min-height: 100dvh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(1rem, 4vw, 3rem);
-      overflow: hidden;
+      overflow-x: hidden;
       cursor: default;
       position: relative;
     }
@@ -147,10 +144,20 @@
     }
     body.pointer-active .spotlight { opacity: 1; }
 
-    /* ── The wordmark — solid Saira caps, no glass on the text itself ── */
-    h1 {
+    /* ── Hero (wordmark) ── */
+    .hero {
       position: relative;
       z-index: 2;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1rem, 4vw, 3rem);
+    }
+
+    /* ── The wordmark — solid Saira caps, no glass on the text itself ── */
+    h1 {
       margin: 0;
       text-align: center;
       user-select: none;
@@ -195,6 +202,308 @@
       text-shadow: 0 0 22px rgba(255, 94, 46, 0.55);
     }
 
+    /* ── Scroll cue ── */
+    .scroll-cue {
+      position: absolute;
+      bottom: clamp(1.25rem, 3vw, 2.5rem);
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Saira', sans-serif;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(250, 250, 250, 0.45);
+      text-decoration: none;
+      padding: 0.6rem 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: color 0.25s ease, transform 0.5s ease;
+      animation: cue-bob 2.6s ease-in-out infinite;
+      z-index: 3;
+    }
+    .scroll-cue:hover { color: rgba(250, 250, 250, 0.95); }
+    .scroll-cue .arr {
+      display: inline-block;
+      width: 1px;
+      height: 18px;
+      background: currentColor;
+      position: relative;
+    }
+    .scroll-cue .arr::after {
+      content: '';
+      position: absolute;
+      left: -3px; bottom: 0;
+      width: 7px; height: 7px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+    }
+    @keyframes cue-bob {
+      0%, 100% { transform: translate(-50%, 0); }
+      50%      { transform: translate(-50%, 4px); }
+    }
+
+    /* ── Work section ── */
+    .work {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: clamp(3rem, 8vw, 7rem) clamp(1rem, 4vw, 3rem) clamp(5rem, 10vw, 9rem);
+    }
+    .work-head {
+      text-align: center;
+      margin-bottom: clamp(2rem, 5vw, 3.5rem);
+    }
+    .work-title {
+      margin: 0 0 0.6rem;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      letter-spacing: 0.005em;
+      text-transform: uppercase;
+      color: #fafafa;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    }
+    .work-sub {
+      margin: 0;
+      font-family: 'Saira', sans-serif;
+      font-weight: 500;
+      font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+      color: rgba(250, 250, 250, 0.6);
+      letter-spacing: 0.02em;
+    }
+
+    .tile-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(1rem, 2vw, 1.75rem);
+    }
+
+    /* ── Tile — uses the liquid-glass recipe verbatim ── */
+    .tile {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 24px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(34px) saturate(180%);
+      -webkit-backdrop-filter: blur(34px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.28),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+        0 30px 80px -20px rgba(0, 0, 0, 0.55);
+      transition:
+        transform 0.45s cubic-bezier(0.2, 0, 0, 1),
+        box-shadow 0.45s ease;
+    }
+    .tile:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.34),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+        0 36px 100px -25px rgba(0, 0, 0, 0.65),
+        0 0 0 1px rgba(255, 94, 46, 0.25),
+        0 0 60px -10px rgba(255, 94, 46, 0.4);
+    }
+
+    /* CSS-painted poster (no image asset needed for v1) */
+    .tile-poster {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle 2px at 22% 30%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(circle 1.5px at 38% 55%, rgba(255,255,255,0.45), transparent 60%),
+        radial-gradient(circle 2.5px at 55% 42%, rgba(255,255,255,0.6), transparent 60%),
+        radial-gradient(circle 1px at 28% 70%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(circle 2px at 68% 65%, rgba(255,255,255,0.5), transparent 60%),
+        radial-gradient(circle 1.5px at 78% 35%, rgba(255,255,255,0.45), transparent 60%),
+        radial-gradient(circle 2px at 47% 22%, rgba(255,255,255,0.4), transparent 60%),
+        radial-gradient(circle 1px at 60% 80%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(circle 2.5px at 85% 55%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(circle 1.5px at 15% 50%, rgba(255,255,255,0.4), transparent 60%),
+        radial-gradient(ellipse 35% 30% at 55% 50%, rgba(255, 94, 46, 0.18), transparent 70%),
+        radial-gradient(ellipse 40% 35% at 30% 60%, rgba(0, 188, 212, 0.12), transparent 70%),
+        radial-gradient(ellipse 30% 25% at 75% 35%, rgba(233, 30, 99, 0.10), transparent 70%),
+        linear-gradient(180deg, #0a0a0e 0%, #050507 100%);
+      transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1), filter 0.3s ease;
+      filter: saturate(0.9) brightness(0.9);
+    }
+    .tile:hover .tile-poster {
+      transform: scale(1.04);
+      filter: saturate(1.1) brightness(1.05);
+    }
+
+    .tile-tag {
+      position: absolute;
+      top: clamp(0.9rem, 2vw, 1.4rem);
+      right: clamp(0.9rem, 2vw, 1.4rem);
+      font-family: 'Saira', sans-serif;
+      font-weight: 600;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(250, 250, 250, 0.7);
+      padding: 0.35rem 0.7rem;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+    }
+
+    .tile-meta {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: clamp(1.25rem, 3vw, 2rem);
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.75) 100%);
+    }
+    .tile-name {
+      margin: 0 0 0.4rem;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+      letter-spacing: 0.005em;
+      text-transform: uppercase;
+      color: #fafafa;
+    }
+    .tile-name .tile-letter {
+      display: inline-block;
+      text-align: center;
+      transition: color 0.25s ease;
+    }
+    .tile-name .tile-letter.scrambling { color: #ff5e2e; }
+    .tile-desc {
+      margin: 0;
+      font-family: 'Saira', sans-serif;
+      font-weight: 500;
+      font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+      color: rgba(250, 250, 250, 0.7);
+      max-width: 50ch;
+    }
+
+    /* ── Demo overlay ── */
+    .demo-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      background: rgba(6, 6, 8, 0.92);
+      backdrop-filter: blur(24px) saturate(140%);
+      -webkit-backdrop-filter: blur(24px) saturate(140%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .demo-overlay.open { opacity: 1; }
+    .demo-overlay[hidden] { display: none; }
+
+    .demo-close {
+      position: absolute;
+      top: clamp(1rem, 2.5vw, 1.75rem);
+      right: clamp(1rem, 2.5vw, 1.75rem);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(250, 250, 250, 0.85);
+      font-family: 'Saira', sans-serif;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      z-index: 12;
+    }
+    .demo-close:hover {
+      color: #fff;
+      background: rgba(255, 94, 46, 0.18);
+      border-color: rgba(255, 94, 46, 0.4);
+    }
+
+    .demo-titlebar {
+      position: absolute;
+      top: clamp(1rem, 2.5vw, 1.75rem);
+      left: clamp(1rem, 2.5vw, 1.75rem);
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(250, 250, 250, 0.8);
+      z-index: 12;
+      pointer-events: none;
+    }
+
+    .demo-gate {
+      position: relative;
+      z-index: 11;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: min(90vw, 480px);
+      text-align: center;
+    }
+    .demo-gate[hidden] { display: none; }
+    .gate-msg {
+      margin: 0;
+      font-family: 'Saira', sans-serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      color: rgba(250, 250, 250, 0.85);
+      letter-spacing: 0.01em;
+      line-height: 1.45;
+    }
+    .gate-msg .accent { color: #ff5e2e; }
+    .gate-start {
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #fafafa;
+      background: rgba(255, 94, 46, 0.22);
+      border: 1px solid rgba(255, 94, 46, 0.55);
+      padding: 0.85rem 1.6rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .gate-start:hover {
+      background: rgba(255, 94, 46, 0.4);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 30px -8px rgba(255, 94, 46, 0.5);
+    }
+
+    .demo-frame-host {
+      position: absolute;
+      inset: 0;
+      z-index: 11;
+    }
+    .demo-frame-host[hidden] { display: none; }
+    .demo-frame-host iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #000;
+    }
+
+    body.demo-open { overflow: hidden; }
+
     /* ── Click ripple ── */
     .ripple {
       position: fixed;
@@ -216,7 +525,10 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .letter, .spotlight, .glass, .orb { transition: none !important; animation: none !important; }
+      .letter, .spotlight, .glass, .orb, .scroll-cue, .tile, .tile-poster, .demo-overlay {
+        transition: none !important;
+        animation: none !important;
+      }
       .ripple { display: none; }
     }
   </style>
@@ -235,11 +547,46 @@
   </div>
   <div class="spotlight" aria-hidden="true"></div>
 
-  <h1 aria-label="Bisesi Educational Technologies">
-    <span class="word w1" data-word="BISESI"></span>
-    <span class="word w2" data-word="EDUCATIONAL"></span>
-    <span class="word w3" data-word="TECHNOLOGIES"></span>
-  </h1>
+  <section class="hero">
+    <h1 aria-label="Bisesi Educational Technologies">
+      <span class="word w1" data-word="BISESI"></span>
+      <span class="word w2" data-word="EDUCATIONAL"></span>
+      <span class="word w3" data-word="TECHNOLOGIES"></span>
+    </h1>
+    <a class="scroll-cue" href="#work" aria-label="Scroll to work">
+      Work <span class="arr" aria-hidden="true"></span>
+    </a>
+  </section>
+
+  <section class="work" id="work">
+    <header class="work-head">
+      <h2 class="work-title">Work</h2>
+      <p class="work-sub">Browser-native experiments. Click to explore.</p>
+    </header>
+    <ul class="tile-grid">
+      <li class="tile"
+          data-demo="particle-swarm"
+          data-title="Particle Swarm"
+          aria-label="Open Particle Swarm demo">
+        <div class="tile-poster" aria-hidden="true"></div>
+        <span class="tile-tag">Webcam · Three.js</span>
+        <div class="tile-meta">
+          <h3 class="tile-name" data-name="Particle Swarm"></h3>
+          <p class="tile-desc">Hand-tracked particle swarm. Closed fist collects; open hand repels.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <div class="demo-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="demo-titlebar">
+    <button class="demo-close" type="button" aria-label="Close demo">× Close</button>
+    <div class="demo-titlebar" id="demo-titlebar"></div>
+    <div class="demo-gate">
+      <p class="gate-msg">Particle Swarm uses your <span class="accent">webcam</span> for hand tracking.</p>
+      <button class="gate-start" type="button">Start →</button>
+    </div>
+    <div class="demo-frame-host" hidden></div>
+  </div>
 
   <script>
     const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@%/<>';
@@ -300,8 +647,119 @@
       l.addEventListener('mouseenter', () => scramble(l, 350));
     });
 
-    // Click anywhere → ripple + cascade scramble across all words
+    // ── Tile titles: wrap chars and reuse scramble on hover ─────────────
+    const tileNames = document.querySelectorAll('.tile-name[data-name]');
+    const tileLetters = [];
+    tileNames.forEach(name => {
+      const txt = name.dataset.name;
+      name.innerHTML = txt.split('').map(ch => {
+        if (ch === ' ') return '<span class="tile-letter space">&nbsp;</span>';
+        return `<span class="tile-letter" data-char="${ch}">${ch}</span>`;
+      }).join('');
+      name.querySelectorAll('.tile-letter:not(.space)').forEach(l => tileLetters.push(l));
+    });
+    // Lock tile-letter widths once fonts load
+    (async () => {
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch (e) {}
+      }
+      tileLetters.forEach(l => {
+        const w = l.getBoundingClientRect().width;
+        const parentFontSize = parseFloat(getComputedStyle(l.parentElement).fontSize);
+        if (parentFontSize > 0 && w > 0) {
+          l.style.width = (w / parentFontSize) + 'em';
+        }
+      });
+    })();
+    document.querySelectorAll('.tile').forEach(tile => {
+      tile.addEventListener('mouseenter', () => {
+        const letters = tile.querySelectorAll('.tile-letter:not(.space)');
+        letters.forEach((l, i) => setTimeout(() => scramble(l, 380), i * 16));
+      });
+    });
+
+    // ── Demo overlay flow ───────────────────────────────────────────────
+    const overlay = document.querySelector('.demo-overlay');
+    const overlayTitle = overlay.querySelector('.demo-titlebar');
+    const gate = overlay.querySelector('.demo-gate');
+    const gateStart = overlay.querySelector('.gate-start');
+    const gateMsg = overlay.querySelector('.gate-msg');
+    const frameHost = overlay.querySelector('.demo-frame-host');
+    const closeBtn = overlay.querySelector('.demo-close');
+
+    let currentDemo = null;
+
+    function openDemo(demoSlug, title) {
+      currentDemo = demoSlug;
+      overlayTitle.textContent = title;
+      gateMsg.innerHTML = `${title} uses your <span class="accent">webcam</span> for hand tracking.`;
+      gate.hidden = false;
+      frameHost.hidden = true;
+      frameHost.innerHTML = '';
+      overlay.hidden = false;
+      document.body.classList.add('demo-open');
+      // Next frame so the transition runs
+      requestAnimationFrame(() => overlay.classList.add('open'));
+    }
+
+    function startDemo() {
+      if (!currentDemo) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = `/demos/${currentDemo}/`;
+      iframe.setAttribute('allow', 'camera; microphone; fullscreen');
+      iframe.setAttribute('sandbox', 'allow-scripts');
+      iframe.setAttribute('title', overlayTitle.textContent);
+      frameHost.appendChild(iframe);
+      gate.hidden = true;
+      frameHost.hidden = false;
+    }
+
+    function closeDemo() {
+      overlay.classList.remove('open');
+      document.body.classList.remove('demo-open');
+      // Wait for fade then strip iframe (kills WebGL + releases camera)
+      setTimeout(() => {
+        overlay.hidden = true;
+        frameHost.innerHTML = '';
+        gate.hidden = false;
+        frameHost.hidden = true;
+        currentDemo = null;
+      }, 400);
+    }
+
+    document.querySelectorAll('.tile[data-demo]').forEach(tile => {
+      tile.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openDemo(tile.dataset.demo, tile.dataset.title);
+      });
+    });
+
+    gateStart.addEventListener('click', (e) => {
+      e.stopPropagation();
+      startDemo();
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeDemo();
+    });
+
+    overlay.addEventListener('click', (e) => {
+      // Only close when clicking the backdrop, not the iframe / gate / close
+      if (e.target === overlay) closeDemo();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !overlay.hidden) closeDemo();
+    });
+
+    // ── Click anywhere → ripple + cascade scramble across the wordmark ──
     document.addEventListener('click', (e) => {
+      // Skip when overlay is open (clicks belong to the demo, not the page)
+      if (!overlay.hidden) return;
+      // Don't trigger when clicking the tile, gate, scroll cue, or close
+      if (e.target.closest('.tile, .demo-overlay, .scroll-cue')) return;
+
       const r = document.createElement('div');
       r.className = 'ripple';
       r.style.left = e.clientX + 'px';
