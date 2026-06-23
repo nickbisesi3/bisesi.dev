@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bisesi Educational Technologies</title>
-  <meta name="description" content="Bisesi Educational Technologies" />
-  <meta property="og:title" content="Bisesi Educational Technologies" />
-  <meta property="og:description" content="Bisesi Educational Technologies" />
+  <title>Bisesi Immersive Technologies</title>
+  <meta name="description" content="Bisesi Immersive Technologies" />
+  <meta property="og:title" content="Bisesi Immersive Technologies" />
+  <meta property="og:description" content="Bisesi Immersive Technologies" />
   <meta name="theme-color" content="#060608" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -180,7 +180,7 @@
     .word { display: block; }
     /* Sized so all three words sit at roughly the same horizontal extent */
     .word.w1 { font-size: clamp(5rem,   24vw, 17rem); }
-    .word.w2 { font-size: clamp(2.7rem, 13vw,  9.5rem); }
+    .word.w2 { font-size: clamp(3rem,   15vw, 11rem); }
     .word.w3 { font-size: clamp(2.5rem, 12vw,  8.8rem); }
 
     .letter {
@@ -560,9 +560,9 @@
   <div class="spotlight" aria-hidden="true"></div>
 
   <section class="hero">
-    <h1 aria-label="Bisesi Educational Technologies">
+    <h1 aria-label="Bisesi Immersive Technologies">
       <span class="word w1" data-word="BISESI"></span>
-      <span class="word w2" data-word="EDUCATIONAL"></span>
+      <span class="word w2" data-word="IMMERSIVE"></span>
       <span class="word w3" data-word="TECHNOLOGIES"></span>
     </h1>
     <a class="scroll-cue" href="#work" aria-label="Scroll to work">
@@ -719,7 +719,10 @@
       const iframe = document.createElement('iframe');
       iframe.src = `/demos/${currentDemo}/`;
       iframe.setAttribute('allow', 'camera; microphone; fullscreen');
-      iframe.setAttribute('sandbox', 'allow-scripts');
+      // allow-same-origin is required for getUserMedia to work inside a sandboxed
+      // iframe — without it the frame has an opaque origin and the browser
+      // silently blocks the camera prompt even with allow="camera" set.
+      iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
       iframe.setAttribute('title', overlayTitle.textContent);
       frameHost.appendChild(iframe);
       gate.hidden = true;
