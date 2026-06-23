@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Webcam feed -->
+        <video id="webcam" autoplay playsinline></video>
+
+        <!-- 2D Canvas for hand landmarks -->
+        <canvas id="canvas"></canvas>
+
+        <!-- Three.js 3D canvas -->
+        <div id="three-canvas"></div>
+
+        <!-- Flash overlay for feedback -->
+        <div id="flash-overlay"></div>
+
+        <!-- UI Elements -->
+        <div id="status">Loading Solar System...</div>
+
+        <!-- Planet info panel -->
+        <div id="planet-info" class="hidden">
+            <h2 id="planet-name">Planet</h2>
+            <div id="planet-facts"></div>
+        </div>
+
+        <!-- Instructions -->
+        <div id="instructions">
+            <p><strong>One Hand:</strong> Point to aim | Pinch to grab & move planets</p>
+            <p><strong>Two Hands:</strong> Pinch both to pan around the solar system</p>
+            <p><strong>Trackpad:</strong> Scroll to orbit | Pinch to zoom | Click to select</p>
+        </div>
+
+        <!-- Zoom indicator -->
+        <div id="zoom-indicator">
+            <span id="zoom-level">1x</span>
+        </div>
+    </div>
+
+    <!-- MediaPipe Hands -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Tone.js for audio -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+
+    <!-- Application -->
+    <script src="main.js"></script>
+</body>
+</html>

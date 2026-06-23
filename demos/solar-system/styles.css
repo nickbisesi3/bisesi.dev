@@ -1,0 +1,224 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#webcam {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+    opacity: 0.3;
+}
+
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1);
+    pointer-events: none;
+    z-index: 2;
+}
+
+#three-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#flash-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease-out;
+    z-index: 8;
+}
+
+#status {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 12px 18px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#planet-info {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 280px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    border-radius: 15px;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(100, 200, 255, 0.5);
+    box-shadow: 0 0 30px rgba(100, 200, 255, 0.3);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#planet-info.hidden {
+    transform: translateX(320px);
+    opacity: 0;
+}
+
+#planet-name {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #64c8ff;
+    text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
+}
+
+#planet-facts {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#planet-facts p {
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 2px solid #64c8ff;
+}
+
+#planet-facts .fact-label {
+    color: #aaa;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+#instructions {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 12px;
+    font-size: 16px;
+    text-align: center;
+    z-index: 10;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+#instructions p {
+    margin: 0;
+}
+
+#instructions strong {
+    color: #64c8ff;
+}
+
+#zoom-indicator {
+    position: absolute;
+    bottom: 100px;
+    left: 20px;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #39FF14;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 10;
+    border: 1px solid rgba(57, 255, 20, 0.3);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Cursor pointer for selected planet */
+.planet-cursor {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 15;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Highlight ring animation */
+@keyframes pulse-ring {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.highlight-ring {
+    animation: pulse-ring 1s ease-out infinite;
+}
+
+/* Loading animation */
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #planet-info {
+        width: 220px;
+        padding: 15px;
+        top: 70px;
+    }
+
+    #instructions {
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+}

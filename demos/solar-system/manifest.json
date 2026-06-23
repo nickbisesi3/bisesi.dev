@@ -1,0 +1,45 @@
+{
+  "id": "cv-solar-system",
+  "version": "1.0.0",
+  "name": "Solar System Explorer (Hand Tracking)",
+  "description": "Webcam-controlled tour of the solar system. Students use pinch and grab hand gestures (MediaPipe Hands) to rotate, scale, and explore the planets — no controller or headset required.",
+  "category": "science",
+  "tags": [
+    "computer-vision",
+    "gesture-control",
+    "mediapipe",
+    "webcam",
+    "astronomy",
+    "solar-system",
+    "hand-tracking"
+  ],
+  "studentView": "./index.html",
+  "metadata": {
+    "difficulty": "beginner",
+    "estimatedDuration": "10-15 minutes",
+    "gradeLevel": "4-8",
+    "subjects": [
+      "astronomy",
+      "earth-and-space-science"
+    ],
+    "learningObjectives": [
+      "Identify the planets and their relative order from the Sun",
+      "Compare relative planet sizes through direct manipulation",
+      "Practice spatial reasoning using natural hand gestures"
+    ]
+  },
+  "features": {
+    "vr": false,
+    "ar": false,
+    "computerVision": true,
+    "multiUser": false,
+    "teacherControls": false,
+    "progressTracking": false
+  },
+  "technical": {
+    "rendering": "three.js@r128",
+    "tracking": "@mediapipe/hands",
+    "input": "webcam",
+    "standalone": true
+  }
+}

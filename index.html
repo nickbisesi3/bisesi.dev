@@ -281,7 +281,7 @@
       margin: 0;
       padding: 0;
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
       gap: clamp(1rem, 2vw, 1.75rem);
     }
 
@@ -314,31 +314,62 @@
         0 0 60px -10px rgba(255, 94, 46, 0.4);
     }
 
-    /* CSS-painted poster (no image asset needed for v1) */
+    /* CSS-painted posters (no image assets needed for v1) */
     .tile-poster {
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(circle 2px at 22% 30%, rgba(255,255,255,0.55), transparent 60%),
-        radial-gradient(circle 1.5px at 38% 55%, rgba(255,255,255,0.45), transparent 60%),
-        radial-gradient(circle 2.5px at 55% 42%, rgba(255,255,255,0.6), transparent 60%),
-        radial-gradient(circle 1px at 28% 70%, rgba(255,255,255,0.35), transparent 60%),
-        radial-gradient(circle 2px at 68% 65%, rgba(255,255,255,0.5), transparent 60%),
-        radial-gradient(circle 1.5px at 78% 35%, rgba(255,255,255,0.45), transparent 60%),
-        radial-gradient(circle 2px at 47% 22%, rgba(255,255,255,0.4), transparent 60%),
-        radial-gradient(circle 1px at 60% 80%, rgba(255,255,255,0.35), transparent 60%),
-        radial-gradient(circle 2.5px at 85% 55%, rgba(255,255,255,0.55), transparent 60%),
-        radial-gradient(circle 1.5px at 15% 50%, rgba(255,255,255,0.4), transparent 60%),
-        radial-gradient(ellipse 35% 30% at 55% 50%, rgba(255, 94, 46, 0.18), transparent 70%),
-        radial-gradient(ellipse 40% 35% at 30% 60%, rgba(0, 188, 212, 0.12), transparent 70%),
-        radial-gradient(ellipse 30% 25% at 75% 35%, rgba(233, 30, 99, 0.10), transparent 70%),
-        linear-gradient(180deg, #0a0a0e 0%, #050507 100%);
       transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1), filter 0.3s ease;
       filter: saturate(0.9) brightness(0.9);
     }
     .tile:hover .tile-poster {
       transform: scale(1.04);
       filter: saturate(1.1) brightness(1.05);
+    }
+
+    /* Particle Swarm poster — dot-field with colored haze */
+    .tile[data-demo="particle-swarm"] .tile-poster {
+      background:
+        radial-gradient(circle 2px   at 22% 30%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(circle 1.5px at 38% 55%, rgba(255,255,255,0.45), transparent 60%),
+        radial-gradient(circle 2.5px at 55% 42%, rgba(255,255,255,0.60), transparent 60%),
+        radial-gradient(circle 1px   at 28% 70%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(circle 2px   at 68% 65%, rgba(255,255,255,0.50), transparent 60%),
+        radial-gradient(circle 1.5px at 78% 35%, rgba(255,255,255,0.45), transparent 60%),
+        radial-gradient(circle 2px   at 47% 22%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(circle 1px   at 60% 80%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(circle 2.5px at 85% 55%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(circle 1.5px at 15% 50%, rgba(255,255,255,0.40), transparent 60%),
+        radial-gradient(ellipse 35% 30% at 55% 50%, rgba(255, 94, 46, 0.18), transparent 70%),
+        radial-gradient(ellipse 40% 35% at 30% 60%, rgba(0, 188, 212, 0.12), transparent 70%),
+        radial-gradient(ellipse 30% 25% at 75% 35%, rgba(233,  30,  99, 0.10), transparent 70%),
+        linear-gradient(180deg, #0a0a0e 0%, #050507 100%);
+    }
+
+    /* Solar System poster — sun + planets + starfield on deep space */
+    .tile[data-demo="solar-system"] .tile-poster {
+      background:
+        /* sun glow + core */
+        radial-gradient(circle 90px at 52% 50%, rgba(255, 180,  70, 0.32), transparent 70%),
+        radial-gradient(circle 14px at 52% 50%, rgba(255, 220, 120, 0.98), transparent 80%),
+        /* planets */
+        radial-gradient(circle 5px  at 24% 56%, rgba(190, 140, 100, 0.95), transparent 80%),
+        radial-gradient(circle 7px  at 72% 38%, rgba( 80, 150, 210, 0.95), transparent 80%),
+        radial-gradient(circle 9px  at 82% 66%, rgba(210, 110,  60, 0.95), transparent 80%),
+        radial-gradient(circle 4px  at 33% 30%, rgba(150, 200, 220, 0.90), transparent 80%),
+        radial-gradient(circle 6px  at 15% 72%, rgba(220, 200, 160, 0.90), transparent 80%),
+        /* faint orbit hint */
+        radial-gradient(ellipse 38% 14% at 52% 50%, transparent 48%, rgba(255,255,255,0.06) 50%, transparent 52%),
+        radial-gradient(ellipse 24% 9%  at 52% 50%, transparent 48%, rgba(255,255,255,0.08) 50%, transparent 52%),
+        /* starfield */
+        radial-gradient(circle 1px   at  8% 18%, rgba(255,255,255,0.55), transparent),
+        radial-gradient(circle 1px   at 18% 84%, rgba(255,255,255,0.45), transparent),
+        radial-gradient(circle 1.5px at 88% 14%, rgba(255,255,255,0.65), transparent),
+        radial-gradient(circle 1px   at 92% 82%, rgba(255,255,255,0.45), transparent),
+        radial-gradient(circle 1px   at 45% 12%, rgba(255,255,255,0.40), transparent),
+        radial-gradient(circle 1px   at 62% 90%, rgba(255,255,255,0.40), transparent),
+        radial-gradient(circle 1.5px at 38% 78%, rgba(255,255,255,0.55), transparent),
+        /* space gradient */
+        radial-gradient(ellipse 80% 70% at 52% 50%, #0c0e18 0%, #04040a 100%);
     }
 
     .tile-tag {
@@ -573,6 +604,17 @@
         <div class="tile-meta">
           <h3 class="tile-name" data-name="Particle Swarm"></h3>
           <p class="tile-desc">Hand-tracked particle swarm. Closed fist collects; open hand repels.</p>
+        </div>
+      </li>
+      <li class="tile"
+          data-demo="solar-system"
+          data-title="Solar System"
+          aria-label="Open Solar System demo">
+        <div class="tile-poster" aria-hidden="true"></div>
+        <span class="tile-tag">Webcam · Three.js</span>
+        <div class="tile-meta">
+          <h3 class="tile-name" data-name="Solar System"></h3>
+          <p class="tile-desc">Point to aim, pinch to grab and move planets. Two-hand pinch to pan the system.</p>
         </div>
       </li>
     </ul>
